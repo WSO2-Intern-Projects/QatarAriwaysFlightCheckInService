@@ -31,16 +31,15 @@ public type FlyerMilesEntry record {|
 configurable string USER = ?;
 configurable string PASSWORD = ?;
 configurable string HOST = ?;
-configurable int PORT = ?;
 configurable string DATABASE = ?;
 
 final mysql:Client dbClient = check new (
-    host = HOST, user = USER, password = PASSWORD, port = PORT, database = DATABASE
+    host = HOST, user = USER, password = PASSWORD, database = DATABASE
 );
 
 isolated function addCustomer(Customer cus) returns int|error {
     sql:ExecutionResult result = check dbClient->execute(`
-        INSERT INTO customer (id, book_reference, customer_id, flight_number, flight_from,
+        INSERT INTO qatar_airways_tb (id, book_reference, customer_id, flight_number, flight_from,
                                flight_to, passenger_name, flight_distance, seat_number)
         VALUES (${cus.id}, ${cus.book_reference}, ${cus.customer_id},  
                 ${cus.flight_number}, ${cus.flight_from}, ${cus.flight_to}, ${cus.passenger_name},
@@ -56,7 +55,7 @@ isolated function addCustomer(Customer cus) returns int|error {
 
 isolated function getCustomer(string passenger_name, string book_reference) returns CheckInEntry|error {
     CheckInEntry customer = check dbClient->queryRow(
-        `SELECT customer.flight_number, customer.seat_number, customer.passenger_name, customer.customer_id, customer.flight_from, customer.flight_to, customer.flight_distance FROM customer WHERE passenger_name = ${passenger_name} AND book_reference = ${book_reference}`
+        `SELECT qatar_airways_tb.flight_number, qatar_airways_tb.seat_number, qatar_airways_tb.passenger_name, qatar_airways_tb.customer_id, qatar_airways_tb.flight_from, qatar_airways_tb.flight_to, qatar_airways_tb.flight_distance FROM qatar_airways_tb WHERE passenger_name = ${passenger_name} AND book_reference = ${book_reference}`
     );
     return customer;
 }

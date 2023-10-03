@@ -20,8 +20,8 @@ service /customers on new http:Listener(7070) {
                     "passengerName": originalResponse.passenger_name,
                     "customerId": originalResponse.customer_id,
                     "flightDistance": originalResponse.flight_distance,
-                    "from": originalResponse.flight_from,
-                    "to": originalResponse.flight_to
+                    "fromWhere": originalResponse.flight_from,
+                    "whereTo": originalResponse.flight_to
                     };
         } else {
             return {
@@ -30,8 +30,8 @@ service /customers on new http:Listener(7070) {
                     "passenger_name": "null",
                     "customer_id": "null",
                     "flightDistance": 0,
-                    "from": "null",
-                    "to": "null"
+                    "fromWhere": "null",
+                    "whereTo": "null"
                 };
         }
 
